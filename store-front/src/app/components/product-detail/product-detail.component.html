@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-8">
+      <h2 class="section-headline"><span>Book Info</span></h2>
+    </div>
+    <div class="col-xs-4">
+      <img src="../../../assets/image/logo.png" class="img-responsive right" style="width:300px; z-index:1;" />
+    </div>
+    <img src="../../../assets/image/wood.png" class="img-responsive right" style="position: absolute; margin-top: 90px; z-index: -2;" />
+  </div>
+  <hr style="position: absolute;width:85%; height:6px; background-color: #333; z-index:-1; margin-top: -170px;" />
+  <div class="row">
+    <div class="row" style="margin-top: 120px;">
+      <div class="col-xs-3">
+        <a routerLink="/productList">Back to product list</a>
+        <br />
+        <img class="img-responsive" src="{{serverPath}}/image/product/{{product.id}}.png" />
+      </div>
+      <div class="col-xs-9">
+        <h3><span *ngIf="addBookSuccess" style="color:forestgreen"><i class="fa fa-check" style="color:forestgreen"></i>Added to cart.</span></h3>
+        <h3><span *ngIf="notEnoughStock" style="color:red">Oops, only <span>{{product.inStockNumber}}</span> In Stock.</span> </h3>
+
+        <h3>{{product.name}}</h3>
+        <div class="row">
+          <div class="col-xs-5">
+            <h5><strong>Category: </strong><span>{{product.category}}</span></h5>
+            <p><strong>Size:</strong><span>{{product.size}}</span></p>
+            <p><strong>Serving Type:</strong><span>{{product.servingType}}</span></p>
+            <p><strong>Caffeine:</strong><span>{{product.caffeine}}</span></p>
+            <p><strong>Region:</strong><span>{{product.region}}</span></p>
+            <p><strong>Roast:</strong> <span>{{product.roast}}</span></p>
+          </div>
+          <div class="col-xs-7">
+            <div class="panel panel-default" style="border-width:5px; margin-top:20px;">
+              <div class="panel-body">
+                <div class="col-xs-6">
+                  <h4>Our Price: <span style="color: #db3208;">$<span>
+            						{{product.ourPrice | number : '1.2-2'}}
+            					</span></span></h4>
+                  <p>List Price: <span style="text-decoration:line-through;">$<span>{{product.listPrice | number : '1.2-2'}}</span></span>
+                  </p>
+                  <p>You Save: $<span>{{product.listPrice-product.ourPrice | number : '1.2-2'}}</span></p>
+                  <span>Qty: </span>
+                  <select [(ngModel)]="qty" class="browser-default" style="width:50px; display:inline;">
+                    <option *ngFor="let x of numberList" [ngValue]="x">{{x}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-6">
+                  <h4 *ngIf="product.inStockNumber>10" style="color:green;">In Stock</h4>
+                  <h4 *ngIf="product.inStockNumber<10 && book.inStockNumber>0" style="color:green;">Only <span>{{product.inStockNumber}}</span> In Stock</h4>
+                  <h4 *ngIf="product.inStockNumber==0" style="color:darkred;">Unavailable</h4>
+                  <button md-raised-button [disabled]="product.inStockNumber==0" (click)="onAddToCart()" class="mat-primary">Add to Cart</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      <p>{{product.description}}</p>
+    </div>
+  </div>
+</div>
